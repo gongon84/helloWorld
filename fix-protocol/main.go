@@ -31,10 +31,15 @@ func main() {
 	storeFactory := quickfix.NewMemoryStoreFactory()
 	logFactory := quickfix.NewScreenLogFactory()
 
-	cfgAcceptor := "acceptor.cfg"
+	cfgAcceptor := "./config/acceptor.cfg"
+	dir, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(dir)
 	cfgAc, err := os.Open(cfgAcceptor)
 	if err != nil {
-		log.Fatalf("設定ファイルの読み込みに失敗: %v", err)
+		log.Fatalf("acceptor.cfgの読み込みに失敗: %v", err)
 	}
 	defer cfgAc.Close()
 
@@ -58,10 +63,10 @@ func main() {
 		select {}
 	}()
 
-	cfgInitiator := "initiator.cfg"
+	cfgInitiator := "./config/initiator.cfg"
 	cfgIn, err := os.Open(cfgInitiator)
 	if err != nil {
-		log.Fatalf("設定ファイルの読み込みに失敗: %v", err)
+		log.Fatalf("initiator.cfgの読み込みに失敗: %v", err)
 	}
 	defer cfgIn.Close()
 
