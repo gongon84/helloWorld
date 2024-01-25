@@ -32,11 +32,6 @@ func main() {
 	logFactory := quickfix.NewScreenLogFactory()
 
 	cfgAcceptor := "./config/acceptor.cfg"
-	dir, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(dir)
 	cfgAc, err := os.Open(cfgAcceptor)
 	if err != nil {
 		log.Fatalf("acceptor.cfgの読み込みに失敗: %v", err)
@@ -90,7 +85,7 @@ func main() {
 		defer initiator.Stop()
 
 		// テストメッセージを送信
-		// time.Sleep(5 * time.Second) // 適当な遅延を設ける
+		time.Sleep(5 * time.Second) // 適当な遅延を設ける
 		testMsg := quickfix.NewMessage()
 		// メッセージの設定（例：Logonメッセージ）
 		testMsg.Header.SetField(quickfix.Tag(35), quickfix.FIXString("A"))
